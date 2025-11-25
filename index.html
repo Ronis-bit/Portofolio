@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Ronx</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="scrollProgress" class="scroll-progress"></div>
+
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+
+    <canvas id="aiBackground"></canvas>
+    <div class="stars"></div>
+    
+    <!-- Photo Carousel Header -->
+    <section class="carousel-header">
+      <!-- Hero Content Overlay - Fixed Position -->
+      <div class="hero-overlay">
+        <div class="glitch-wrapper">
+          <h1 class="glitch" data-text="RONX">RONX</h1>
+        </div>
+        <p class="subtitle" id="typingText"></p>
+        <p class="university">Universitas Mataram</p>
+      </div>
+      
+      <!-- Dots Navigation -->
+      <div class="carousel-dots" id="carouselDots"></div>
+      
+      <!-- Scroll Indicator -->
+      <div class="scroll-indicator">
+        <span>Scroll →</span>
+      </div>
+      
+      <div class="carousel-container" id="carouselContainer">
+        <div class="carousel-track" id="carouselTrack">
+          <!-- Original Slides -->
+          <div class="carousel-slide" data-index="1">
+            <img src="./roni1.jpg" alt="Mathematics Journey" loading="eager" />
+            <div class="carousel-overlay">
+              <div class="carousel-content">
+                <span class="carousel-number">01</span>
+                <h3 class="carousel-title">Mathematics Journey</h3>
+                <p class="carousel-desc">Perjalanan eksplorasi matematika yang memadukan teori abstrak dengan aplikasi praktis</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-slide" data-index="2">
+            <img src="./roni2.jpg" alt="Electronics Innovation" loading="eager" />
+            <div class="carousel-overlay">
+              <div class="carousel-content">
+                <span class="carousel-number">02</span>
+                <h3 class="carousel-title">Electronics Innovation</h3>
+                <p class="carousel-desc">Mengimplementasikan konsep matematis ke dalam rangkaian elektronika yang inovatif</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-slide" data-index="3">
+            <img src="./roni3.jpg" alt="Problem Solving" loading="eager" />
+            <div class="carousel-overlay">
+              <div class="carousel-content">
+                <span class="carousel-number">03</span>
+                <h3 class="carousel-title">Problem Solving</h3>
+                <p class="carousel-desc">Setiap masalah adalah puzzle yang menantang dengan logika matematis</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-slide" data-index="4">
+            <img src="./roni4.jpg" alt="Academic Excellence" loading="eager" />
+            <div class="carousel-overlay">
+              <div class="carousel-content">
+                <span class="carousel-number">04</span>
+                <h3 class="carousel-title">Academic Excellence</h3>
+                <p class="carousel-desc">Dedikasi dalam mendalami ilmu matematika di Universitas Mataram</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-slide" data-index="5">
+            <img src="./roni5.jpg" alt="Tech Enthusiast" loading="eager" />
+            <div class="carousel-overlay">
+              <div class="carousel-content">
+                <span class="carousel-number">05</span>
+                <h3 class="carousel-title">Tech Enthusiast</h3>
+                <p class="carousel-desc">Eksplorasi teknologi terkini dengan pendekatan analitis yang kuat</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-slide" data-index="6">
+            <img src="./roni6.jpg" alt="Future Vision" loading="eager" />
+            <div class="carousel-overlay">
+              <div class="carousel-content">
+                <span class="carousel-number">06</span>
+                <h3 class="carousel-title">Future Vision</h3>
+                <p class="carousel-desc">Membangun masa depan dengan menggabungkan matematika dan elektronika</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Cloned Slides for Infinite Loop -->
+          <div class="carousel-slide carousel-slide-clone" data-index="1">
+            <img src="./roni1.jpg" alt="Mathematics Journey" loading="lazy" />
+            <div class="carousel-overlay">
+              <div class="carousel-content">
+                <span class="carousel-number">01</span>
+                <h3 class="carousel-title">Mathematics Journey</h3>
+                <p class="carousel-desc">Perjalanan eksplorasi matematika yang memadukan teori abstrak dengan aplikasi praktis</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-slide carousel-slide-clone" data-index="2">
+            <img src="./roni2.jpg" alt="Electronics Innovation" loading="lazy" />
+            <div class="carousel-overlay">
+              <div class="carousel-content">
+                <span class="carousel-number">02</span>
+                <h3 class="carousel-title">Electronics Innovation</h3>
+                <p class="carousel-desc">Mengimplementasikan konsep matematis ke dalam rangkaian elektronika yang inovatif</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-slide carousel-slide-clone" data-index="3">
+            <img src="./roni3.jpg" alt="Problem Solving" loading="lazy" />
+            <div class="carousel-overlay">
+              <div class="carousel-content">
+                <span class="carousel-number">03</span>
+                <h3 class="carousel-title">Problem Solving</h3>
+                <p class="carousel-desc">Setiap masalah adalah puzzle yang menantang dengan logika matematis</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="about">
+        <div class="section-header">
+          <h2>[ TENTANG SAYA ]</h2>
+        </div>
+        <div class="content-box">
+          <p class="intro-text">Seorang mahasiswa Matematika di Universitas Mataram yang memiliki passion mendalam dalam dunia elektronika. Menggabungkan ketelitian matematis dengan kreativitas teknis untuk menciptakan solusi inovatif.</p>
+        </div>
+      </section>
+
+      <section class="expertise">
+        <div class="section-header">
+          <h2>[ KEAHLIAN ]</h2>
+        </div>
+        <div class="expertise-grid">
+          <div class="card">
+            <div class="card-icon">∑</div>
+            <h3>Matematika</h3>
+            <p>Analisis matematis, pemodelan, algoritma, dan pemecahan masalah kompleks dengan pendekatan logis dan terstruktur.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Elektronika</h3>
+            <p>Desain rangkaian, mikrokontroler, sistem embedded, dan implementasi proyek-proyek elektronika modern.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">{ }</div>
+            <h3>Programming</h3>
+            <p>Pengembangan software, computational mathematics, dan implementasi algoritma untuk aplikasi praktis.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey">
+        <div class="section-header">
+          <h2>[ PERJALANAN ]</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>Mahasiswa Matematika</h3>
+              <p class="timeline-uni">Universitas Mataram</p>
+              <p>Mendalami teori matematika murni dan terapan, dengan fokus pada analisis, aljabar, dan matematika komputasi. Setiap teorema adalah puzzle yang menantang untuk dipecahkan.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>Elektronika Enthusiast</h3>
+              <p>Mengaplikasikan konsep matematika ke dalam dunia nyata melalui proyek elektronika. Dari rangkaian sederhana hingga sistem kompleks, setiap komponen adalah bagian dari persamaan yang lebih besar.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>Problem Solver</h3>
+              <p>Menggabungkan logika matematis dengan kreativitas teknis untuk menciptakan solusi inovatif. Setiap masalah adalah peluang untuk belajar dan berkembang.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="philosophy">
+        <div class="section-header">
+          <h2>[ FILOSOFI ]</h2>
+        </div>
+        <div class="quote-box">
+          <p class="quote">"Di mana matematika bertemu elektronika, di sana inovasi lahir."</p>
+          <p class="quote-sub">Matematika memberikan fondasi logis, elektronika memberikan implementasi nyata. Keduanya adalah bahasa universal yang melampaui kata-kata.</p>
+        </div>
+      </section>
+
+      <section class="contact">
+        <div class="section-header">
+          <h2>[ KONEKSI ]</h2>
+        </div>
+        <div class="contact-grid">
+          <a href="#" class="contact-btn">
+            <span class="btn-icon">@</span>
+            <span>Email</span>
+          </a>
+          <a href="#" class="contact-btn">
+            <span class="btn-icon">in</span>
+            <span>LinkedIn</span>
+          </a>
+          <a href="#" class="contact-btn">
+            <span class="btn-icon">&lt;/&gt;</span>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </section>
+
+      <footer>
+        <p>&lt;/&gt; dengan passion oleh Mahasiswa Matematika & Elektronika | Universitas Mataram</p>
+      </footer>
+    </div>
+
+    <button id="backToTop" class="back-to-top" title="Back to Top">
+      <span>↑</span>
+    </button>
+
+    <script src="script.js"></script>
+  </body>
+</html>
