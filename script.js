@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start auto scroll
         function startAutoScroll() {
             stopAutoScroll();
-            autoScrollInterval = setInterval(autoScroll, 1200);
+            autoScrollInterval = setInterval(autoScroll, 1500);
         }
         
         // Stop auto scroll
@@ -541,18 +541,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 autoScrollInterval = null;
             }
         }
+
+        // Handle user interaction start
+        function handleInteractionStart() {
+            isUserScrolling = true;
+            stopAutoScroll();
+            clearTimeout(scrollTimeout);
+        }
+
+        // Handle user interaction end
+        function handleInteractionEnd() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                isUserScrolling = false;
+                startAutoScroll();
+            }, 2000);
+        }
         
-        // Handle manual scroll
+        // Handle manual scroll (ONLY for infinite loop check and active state)
         carouselContainer.addEventListener('scroll', () => {
             // Check for infinite loop transition
             checkInfiniteLoop();
-            
-            // User is scrolling
-            isUserScrolling = true;
-            stopAutoScroll();
-            
-            // Clear previous timeout
-            clearTimeout(scrollTimeout);
             
             // Update active slide based on scroll position
             const currentIndex = getCurrentSlideIndex();
@@ -560,36 +569,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (displayIndex !== currentSlideIndex) {
                 updateActiveSlide(displayIndex);
             }
-            
-            // Resume auto scroll after user stops scrolling (2 seconds idle)
-            scrollTimeout = setTimeout(() => {
-                isUserScrolling = false;
-                startAutoScroll();
-            }, 2000);
         });
         
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                handleInteractionStart();
+                
                 const currentIndex = getCurrentSlideIndex();
-                scrollToSlide(currentIndex - 1);
-                isUserScrolling = true;
-                stopAutoScroll();
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
-                    isUserScrolling = false;
-                    startAutoScroll();
-                }, 2000);
-            } else if (e.key === 'ArrowRight') {
-                const currentIndex = getCurrentSlideIndex();
-                scrollToSlide(currentIndex + 1);
-                isUserScrolling = true;
-                stopAutoScroll();
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
-                    isUserScrolling = false;
-                    startAutoScroll();
-                }, 2000);
+                if (e.key === 'ArrowLeft') {
+                    scrollToSlide(currentIndex - 1);
+                } else {
+                    scrollToSlide(currentIndex + 1);
+                }
+                
+                handleInteractionEnd();
             }
         });
         
@@ -598,8 +592,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                 return;
             }
+            // Only stop if they are actually scrolling the carousel
+            handleInteractionStart();
             e.preventDefault();
             carouselContainer.scrollLeft += e.deltaY;
+            handleInteractionEnd();
         }, { passive: false });
         
         // Touch/drag scroll handling
@@ -609,14 +606,22 @@ document.addEventListener('DOMContentLoaded', () => {
         
         carouselContainer.addEventListener('mousedown', (e) => {
             isDragging = true;
+            handleInteractionStart();
+            
             startX = e.pageX - carouselContainer.offsetLeft;
             scrollLeft = carouselContainer.scrollLeft;
             carouselContainer.style.cursor = 'grabbing';
             carouselContainer.style.userSelect = 'none';
-            
-            isUserScrolling = true;
-            stopAutoScroll();
         });
+
+        // Touch support
+        carouselContainer.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            handleInteractionStart();
+            
+            startX = e.touches[0].pageX - carouselContainer.offsetLeft;
+            scrollLeft = carouselContainer.scrollLeft;
+        }, { passive: true });
         
         carouselContainer.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
@@ -625,18 +630,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const walk = (x - startX) * 2;
             carouselContainer.scrollLeft = scrollLeft - walk;
         });
+
+        carouselContainer.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            // Don't prevent default on touch to allow vertical scrolling
+            const x = e.touches[0].pageX - carouselContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            carouselContainer.scrollLeft = scrollLeft - walk;
+        }, { passive: true });
         
         carouselContainer.addEventListener('mouseup', () => {
             if (isDragging) {
                 isDragging = false;
                 carouselContainer.style.cursor = 'grab';
                 carouselContainer.style.userSelect = 'auto';
-                
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
-                    isUserScrolling = false;
-                    startAutoScroll();
-                }, 2000);
+                handleInteractionEnd();
+            }
+        });
+
+        carouselContainer.addEventListener('touchend', () => {
+            if (isDragging) {
+                isDragging = false;
+                handleInteractionEnd();
             }
         });
         
@@ -645,6 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 isDragging = false;
                 carouselContainer.style.cursor = 'grab';
                 carouselContainer.style.userSelect = 'auto';
+                handleInteractionEnd();
             }
         });
         
